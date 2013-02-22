@@ -8,8 +8,6 @@ type Affect a = (a -> a)
 instance Show (Affect Thing) where
   show _ = "affect"
 
-
-
 data Attributes =
   Health Int |
   Armor Int |
@@ -36,6 +34,8 @@ data World = World {
   places :: M.Map Int (M.Map Int (TVar [Int])),
   stuff :: M.Map Int (TVar Thing) }
 
-whereIs world id = thingy $ M.lookup id world
+typ world = TVar (M.Map Int (M.Map Int [Int]) (M.Map Int Thing)
+
+whereIs w id = thingLoc $ M.lookup id w
   where
-    thingy t = t >>= return.readTVar >>= return . \x -> x >>= \t' -> return (xLoc t', yLoc t')
+    thingLoc t = t >>= return.readTVar >>= return . \x -> x >>= \t' -> return (xLoc t', yLoc t')
